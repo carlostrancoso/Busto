@@ -30,6 +30,22 @@ function draw() {
   //rotateY(-1);
   rotateZ(PI);
   noStroke();
-  model(busto);
+  
+  for (let j = 0; j < 5; j++) {
+    push();
+    for (let i = 0; i < 80; i++) {
+      translate(
+        sin(frameCount * 0.001 + j) * 100,
+        sin(frameCount * 0.001 + j) * 100,
+        i * 0.1
+      );
+      rotateZ(frameCount * 0.002);
+      push();
+      model(busto);
+      pop();
+    }
+    pop();
+  }
+  
   
 }
