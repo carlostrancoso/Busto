@@ -24,6 +24,7 @@ function draw() {
   pointLight(250, 0, 0, 0, 100, width/2);
   pointLight(0, 0, 250, -100, -100, height/2);
   pointLight(2500, 250, 250, 150, 150, height/2);
+  ambientLight(150)
   //normalMaterial();
   texture(map);
   orbitControl(5,5,0.2);
@@ -35,19 +36,19 @@ function draw() {
   
   for (let j = 0; j < 6; j+=3) {
     push();
-    for (let i = 0; i < 80; i+=5) {
+    for (let i = 0; i < 10; i+=5) {
       translate(
-        sin(frameCount * 0.001 + j) * locX,
-        sin(frameCount * 0.01 + j) * locY,
+        sin(frameCount * 0.001 + j) * 350,
+        sin(frameCount * 0.01 + j) * -150,
         i * 0.1
       );
-      rotateZ(frameCount * 0.002);
+      rotateZ(frameCount * 0.001 + i);
+      rotateX(frameCount * 0.004 + i);
       push();
       model(busto);
       pop();
     }
     pop();
   }
-  
   
 }
