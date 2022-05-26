@@ -1,23 +1,29 @@
 let busto;
 let map;
+let rndclr;
 
 function preload() {
   busto = loadModel('BUSTO_5.obj', true);
   map = loadImage('BUSTO_5.jpg');
+  rndclr = random (1000);
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   //var cnv = createCanvas(300, 450, WEBGL);
   //debugMode();
-  background(0);
+  //background(0);
   //var x = (windowWidth - width) / 2;
   //var y = (windowHeight - height) / 2;
   //cnv.position(x, y);
 }
 
 function draw() {
-  background(0);
+
+  colorMode(HSB,1000);
+  background(rndclr+frameCount%1000,1000,1000);
+
+  colorMode(RGB);
  
   let locX = mouseX - width / 2;
   let locY = mouseY - height / 2;
@@ -30,7 +36,7 @@ function draw() {
   orbitControl(5,5,0.2);
   //rotateX(PI/6);
   //rotateY(-1);
-  rotateZ(PI);
+ // rotateZ(PI);
   rotateX(PI);
   noStroke();
   
@@ -50,5 +56,10 @@ function draw() {
     }
     pop();
   }
+  model(busto);
   
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
