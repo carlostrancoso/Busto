@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persona</title>
+  <link type="text/css" rel="stylesheet" href="./main.css">
+  <script  type="importmap">{
+    "imports": {
+      "three": "https://threejs.org/build/three.module.js"
+    }
+  }</script><!-- Remove this when import maps will be widely supported -->
+  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <script type="module">
+    
+   //bibliotecas
+   import * as THREE from 'three';
+   import {OrbitControls} from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
+   import {OBJLoader} from 'https://threejs.org/examples/jsm/loaders/OBJLoader.js';
+   import {MTLLoader} from 'https://threejs.org/examples/jsm/loaders/MTLLoader.js';
+
+  //loading screen
+
+  const manager = new THREE.LoadingManager();
+  const loadingContainer = document.querySelector('.loading-screen')
+  
+  manager.onLoad = function ( ) {
+
+  loadingContainer.style.display='none';
+  
+
+};
+
+manager.onError = function ( url ) {
+
+	console.log( 'There was an error loading ' + url );
+
+};
+
+  //janela e motor render
+  var canvas = document.querySelector('#c');
+  var renderer = new THREE.WebGLRenderer({canvas, alpha:true});
+  renderer.setClearColor( 0xEDEDED, 0 );
+    
+  //camera
+  var fov = 25;
+  var aspect = 2;  // the canvas default
+  var near = 0.1;
+  var far = 50;
+  var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.set(0, 10, 20);
+
+
+    
+  //controlo orbita
+  var controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;  
+  controls.target.set(0, 1, 0);
+  controls.enableZoom = false;
+  controls.enablePan = false;
+    
+  //cena e fundo 
+  //const bgcolor = new THREE.Color(0xEDEDED);
+  const bgcolor = new THREE.Color(0xdb4437);
+  const scene = new THREE.Scene();
+  scene.background = bgcolor;
+
+  //nevoeiro 
+
+  const fogcolor = 0xd94e43;
+
+  {
+  scene.fog = new THREE.Fog(fogcolor, 20, 21.5);
+  }
+
+  //luz ambiente
+
+  const light = new THREE.AmbientLight( 0xffffff, 4 ); // soft white light
+  scene.add( light );
+
+  /*
+
+    
+  //luz vermelha
+  {
+    var color = 0xE7071B;
+    var intensity = 4;
+    var light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(5, 10, 10);
+    scene.add(light);
+    scene.add(light.target);
+  }
+
+   
+    //luz azul
+  {
+    var color = 0x0000FF;
+    var intensity = 3; 
+    var light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(10, 12, 2);
+    scene.add(light);
+    scene.add(light.target);
+  }
+
+   
+    //luz verde
+    
+  {
+    var color = 0x00FF00;
+    var intensity = 2;
+    var light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(-10, 5, 2);
+    scene.add(light);
+    scene.add(light.target);
+  }
+  
+  */
+
+  //lupa
+
+	  /*var lupa;
+  {
+    var objLoader = new OBJLoader(manager);
+    var mat = new THREE.MeshPhysicalMaterial({});
+mat.reflectivity = 0
+mat.transmission = 1
+mat.roughness = 0.2
+mat.metalness = 0
+mat.clearcoat = 0.3
+mat.clearcoatRoughness = 0.25
+mat.color = new THREE.Color(0xffffff)
+mat.ior = 1.2
+mat.thickness = 5
+
+objLoader.load('LUPA.obj', function (obj) {
+        obj.traverse(function (child) {
+
+            if (child instanceof THREE.Mesh) {
+                child.material = mat;
+                mat.side = THREE.DoubleSide;
+            }
+
+        });
+        lupa = obj;
+        scene.add(lupa);
+      lupa.rotation.y = Math.PI;
+    });
+    }
+*/
+    //bustos
+
+    var busto;
+  {
+    var mtlLoader = new MTLLoader(manager);
+    mtlLoader.load('BUSTO.mtl', (mtl) => {
+      mtl.preload();
+      for (var material of Object.values(mtl.materials)) {
+     material.side = THREE.DoubleSide;
+      }
+      var objLoader = new OBJLoader(manager);
+      objLoader.setMaterials(mtl);
+      objLoader.load('BUSTO.obj', (mesh) => {
+        busto = mesh;
+        scene.add(busto);
+        busto.rotation.y = Math.PI;
+        busto.visible = true;
+      });
+    });
+    
+  }
+  
+  var busto2;
+  {
+    var mtlLoader = new MTLLoader(manager);
+    mtlLoader.load('BUSTO_2.mtl', (mtl) => {
+      mtl.preload();
+      for (var material of Object.values(mtl.materials)) {
+     material.side = THREE.DoubleSide;
+      }
+      var objLoader = new OBJLoader(manager);
+      objLoader.setMaterials(mtl);
+      objLoader.load('BUSTO_2.obj', (mesh2) => {
+        busto2 = mesh2;
+        scene.add(busto2);
+        busto2.rotation.y = Math.PI;
+        busto2.visible = false;
+      });
+    });
+    
+  }
+
+  var busto3;
+  {
+    var mtlLoader = new MTLLoader(manager);
+    mtlLoader.load('BUSTO_3.mtl', (mtl) => {
+      mtl.preload();
+      for (var material of Object.values(mtl.materials)) {
+     material.side = THREE.DoubleSide;
+      }
+      var objLoader = new OBJLoader(manager);
+      objLoader.setMaterials(mtl);
+      objLoader.load('BUSTO_3.obj', (mesh3) => {
+        busto3 = mesh3;
+        scene.add(busto3);
+        busto3.rotation.y = Math.PI/10;
+        busto3.rotation.x = -Math.PI/20;
+        busto3.visible = false;
+      });
+    });
+    
+  }
+
+  var busto4;
+  {
+    var mtlLoader = new MTLLoader(manager);
+    mtlLoader.load('BUSTO_4.mtl', (mtl) => {
+      mtl.preload();
+      for (var material of Object.values(mtl.materials)) {
+     material.side = THREE.DoubleSide;
+      }
+      var objLoader = new OBJLoader(manager);
+      objLoader.setMaterials(mtl);
+      objLoader.load('BUSTO_4.obj', (mesh4) => {
+        busto4 = mesh4;
+        scene.add(busto4);
+        busto4.rotation.y = Math.PI/2;
+        busto4.visible = false;
+      });
+    });
+    
+  }
+
+  var busto5;
+  {
+    var mtlLoader = new MTLLoader(manager);
+    mtlLoader.load('BUSTO_5.mtl', (mtl) => {
+      mtl.preload();
+      for (var material of Object.values(mtl.materials)) {
+     material.side = THREE.DoubleSide;
+      }
+      var objLoader = new OBJLoader(manager);
+      objLoader.setMaterials(mtl);
+      objLoader.load('BUSTO_5.obj', (mesh5) => {
+        busto5 = mesh5;
+        scene.add(busto5);
+        busto5.rotation.y = Math.PI/2;
+        busto5.visible = false;
+      });
+    });
+    
+  }
+
+  //Rotatividade dos modelos
+
+  var state = 0;
+
+  var rotatividade = function (event) {
+    state++;
+
+    if (state == 1) {
+
+    //mariana
+    busto.visible = false;
+    busto2.visible = true;
+    busto3.visible = false;
+    busto4.visible = false;
+    busto5.visible = false;
+    scene.background = new THREE.Color(0x3b5998);
+    scene.fog.color = new THREE.Color(0x466094);
+    light.intensity = 3.5;
+
+  } else if (state == 2) {
+    //gustavo
+    busto.visible = false;
+    busto2.visible = false;
+    busto3.visible = true;
+    busto4.visible = false;
+    busto5.visible = false;
+    scene.background = new THREE.Color(0xfffc00);
+    scene.fog.color = new THREE.Color(0xfffe73);
+    scene.fog.near = 20.5;
+    scene.fog.far = 22;
+    light.intensity = 2;
+
+  } else if (state == 3) {
+    //matias
+    busto.visible = false;
+    busto2.visible = false;
+    busto3.visible = false;
+    busto4.visible = true;
+    busto5.visible = false;
+    scene.background = new THREE.Color(0x1da1f2);
+    scene.fog.color = new THREE.Color(0x2ca7f2);
+    scene.fog.near = 20;
+    scene.fog.far = 21.5;
+    light.intensity = 2;
+
+  } else if (state == 4) {
+    //sonia
+    busto.visible = false;
+    busto2.visible = false;
+    busto3.visible = false;
+    busto4.visible = false;
+    busto5.visible = true;
+    scene.background = new THREE.Color(0xc32aa3);
+    scene.fog.color = new THREE.Color(0xbf4ba7);
+    light.intensity = 2;
+
+  } else if (state >= 5) {
+    state = 0;
+    //lucas
+    busto.visible = true;
+    busto2.visible = false;
+    busto3.visible = false;
+    busto4.visible = false; 
+    busto5.visible = false;
+    scene.background = new THREE.Color(0xdb4437);
+    scene.fog.color = new THREE.Color(0xd94e43);
+    light.intensity = 4;
+  }
+};
+
+// formas de interacao
+
+document.querySelector('#c').addEventListener('mouseup', rotatividade, false);
+document.querySelector('#c').addEventListener('touchend', rotatividade, false);
+
+
+//acelerometro para mobile (não funciona no iframe do Wordpress)
+    
+var acelx = 1;
+var acely = 1;
+
+window.addEventListener('devicemotion', function(e) 
+{
+  if(e.accelerationIncludingGravity.x == 0 || e.accelerationIncludingGravity.x === undefined || e.accelerationIncludingGravity.x == null){
+    acelx = 1;        
+   }
+  
+   else if(e.accelerationIncludingGravity.y == 0 || e.accelerationIncludingGravity.y == undefined || e.accelerationIncludingGravity.y == null){
+    acely = 1;        
+   } else {
+     acelx = e.accelerationIncludingGravity.x;
+      acely = e.accelerationIncludingGravity.y;
+   }
+    
+});
+    
+    window.addEventListener("message", receiveMessage, false);
+function receiveMessage(event) {
+    console.debug(event.data);
+}
+
+
+
+//redimensionamento da janela
+
+  function resizeRendererToDisplaySize(renderer) {
+    var canvas = renderer.domElement;
+    var width = canvas.clientWidth;
+    var height = canvas.clientHeight;
+    var needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
+
+
+  //funcao de animacao
+ function animate() {
+    requestAnimationFrame(animate);
+    
+  // if(lupa) lupa.rotation.y += (0.001 * (scrollCount + 1) * (acely - 5));
+   if(busto) busto.rotation.y -= (0.001 * acelx);    
+   if(busto2) busto2.rotation.y -= (0.001 * acelx);   
+   if(busto3) busto3.rotation.y -= (0.001 * acelx);   
+   if(busto4) busto4.rotation.y -= (0.001 * acelx);  
+   if(busto5) busto5.rotation.y -= (0.001 * acelx);   
+
+    renderer.render(scene, camera);
+
+    if (resizeRendererToDisplaySize(renderer)) {
+      var canvas = renderer.domElement;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    }
+    controls.update();
+
+    console.log(state);
+
+    
+    
+};
+
+animate();
+
+
+    </script>
+</head>
+
+<body>
+
+  <div class="info">
+    <div class="message"><h3>Persona</h3><br>Pode interagir tocando e arrastando a tela</div>
+    <br />
+    <button class="ok" onclick="this.parentElement.style.display='none';">OK</button>
+</div>
+
+
+<div class="topnav">
+  <a href="https://carlostrancoso.github.io/Nuvem/">Anterior</a>
+  <div class="topnav-right">
+    <a href="https://carlostrancoso.github.io/Lupa/">Próximo</a>
+  </div>
+
+</div>
+
+  <canvas id="c"></canvas>
+  <div class="loading-screen">
+    <label for="loading-screen">A carregar...</label>
+  </div>
+</body>
+
+</html>

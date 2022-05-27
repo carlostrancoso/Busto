@@ -1,0 +1,104 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    color: #fff;
+      font-family: Monospace;
+      font-size: 13px;
+      line-height: 18px;
+}
+#c {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+}
+#c:active {
+cursor: grabbing;
+
+}
+
+.info {
+	display: fixed;
+	background-color: #333;
+	color: #ffffff;
+	position: fixed;
+	width: 250px;
+	height: 225px;
+	left: 0;
+	right: 0;
+	top:0;
+	bottom: 0;
+	margin: auto;
+	padding: 15px 20px 10px;
+	box-sizing: border-box;
+	text-align: center;
+	  /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
+	  max-width: 100%;
+	  max-height: 100%;
+	  overflow: auto;
+
+}
+
+        .info-button {
+            background-color: #FFFFFF;
+            display: inline-block;
+            border: 1px solid rgb(0, 0, 0);
+            padding: 5px;
+            text-align: center;
+            width: 60px;
+            cursor: pointer;
+        }
+
+        .info-message {
+            text-align: left;
+            color: #FFFFFF;
+        }
+
+/* Barra de topo */
+.topnav {
+position: relative;
+background-color: #333;
+overflow: hidden;
+}
+
+.topnav a {
+float: left;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+}
+
+.topnav a:hover {
+background-color: #ddd;
+color: black;
+}
+
+.topnav-right {
+float: right;
+}
+
+@media screen and (max-width: 600px) {
+.topnav a, .topnav-right, .topnav-centered a {
+
+font-size: 12px;
+
+}
+}
+
+.loading-screen {
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%,-50%);
+width:100%;
+height: 100%;
+background-color: rgba(237,237,237,0.95);
+display: flex ;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+color: black;
+font-size: small;
+}
