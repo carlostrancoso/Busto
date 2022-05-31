@@ -403,15 +403,32 @@ animate();
 
 <body>
 
+  <!-- Info inicial -->
   <div class="info">
-    <div class="message"><h3>Persona</h3><br>Pode interagir tocando e arrastando a tela</div>
+    <div class="message"><h3>Persona</h3><br>Interaja tocando e arrastando.<br><br>Use os botões ‘Anterior’ e ‘Próximo’ para mudar de site,<br>e o botão ‘Sobre’ para saber mais informações.<br><br></div>
     <br />
     <button class="ok" onclick="this.parentElement.style.display='none';">OK</button>
 </div>
 
+<div class="sobre" id="sobreMsg">
+	<div class="message"><h3>Persona</h3><a href="https://carlostrancoso.com/"><h2>Carlos Trancoso</h2></a>‘Persona’ faz parte do projeto experimental <a href="https://carlostrancoso.com/rise-of-trivial/">‘Rise of trivial’</a>. O termo ‘Persona’ é usado no marketing digital para descrever uma personagem fictícia que representa um cliente ideal. É também, na conceção da filosofia clássica, um arquétipo, ou seja, uma ideia como modelo originário de algo existente. Estes retratos (na forma de bustos tridimensionais) representam uma conceção platónica da web: embora não a vejamos, aceitamos a sua existência. Assim, no decurso dos nossos dias e das nossas rotinas, existem margens entre mundos que são constantemente redesenhadas e atualizadas. O limite entre a nossa vivência pessoal e o mundo global é um campo de liberdade, mas também um campo de batalha onde os temas basilares da sociedade se misturam com os nossos medos e desejos pessoais.
+	  Esta exposição situa-se no limite entre o físico e o virtual, entre o racional e o sensorial, entre o humano e o não-humano. É uma experiência que nos coloca nesse espaço estranho mas ao mesmo tempo familiar: a margem.</div>
+	<br />
+	<button class="ok" onclick="this.parentElement.style.visibility = 'hidden';">Fechar</button>
+  </div>
 
+<!-- Top navigation -->
 <div class="topnav">
+
+   <!-- Centered link -->
+   <div class="topnav-centered" onclick="document.getElementById('sobreMsg').style.visibility = 'visible'">
+    <a>Sobre</a>
+  </div>
+
+  <!-- Left-aligned links (default) -->
   <a href="https://carlostrancoso.github.io/Nuvem/">Anterior</a>
+  
+  <!-- Right-aligned links -->
   <div class="topnav-right">
     <a href="https://carlostrancoso.github.io/Lupa/">Próximo</a>
   </div>
